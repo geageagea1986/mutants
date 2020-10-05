@@ -1,7 +1,7 @@
 # Examen Mercado Libre
 El presente proyecto es la resolución del exámen de Mutantes. El proyecto está realizado en Java (IDE Eclipse) utilizando el SDK de Amazon Web Services para la comunicación contra la base de datos NoSQL DynamoDB. El proyecto implementa los handlers de los servicios POST/mutant y GET/stats expuestos en el URL compartida. 
 ## Compilación
-Para compilar el proyecto es necesario agregar el sitio de AWS para la instalación del SDK. Para hacerlo, en el menú *Ayuda -> Instalar nuevo software* agregar la dirección **https://aws.amazon.com/eclipse** en el campo **Trabajar con** y buscar el siguiente paquete:
+Para compilar el proyecto y correr el test unit es necesario agregar el sitio de AWS para la instalación del SDK. Para hacerlo, en el menú *Ayuda -> Instalar nuevo software* agregar la dirección **https://aws.amazon.com/eclipse** en el campo **Trabajar con** y buscar el siguiente paquete:
 > AWS Core Management Tools
 ### Credenciales
 Al instalar el paquete *AWS Core Management Tools* pedirá las claves para poder utilizar el ToolKit. Para los efectos de poder compilar, copiar el archivo *credentials* enviado por mail junto al entregable en *$HOME*/.aws/credentials y reiniciar el Eclipse.
