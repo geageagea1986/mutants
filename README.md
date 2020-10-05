@@ -3,6 +3,11 @@ El presente proyecto es la resolución del exámen de Mutantes. El proyecto est�
 ## Compilación
 Para compilar el proyecto es necesario agregar el sitio de AWS para la instalación del SDK. Para hacerlo, en el menú *Ayuda -> Instalar nuevo software* agregar la dirección **https://aws.amazon.com/eclipse** en el campo **Trabajar con** y buscar el siguiente paquete:
 > AWS Core Management Tools
+### Credenciales
+Al instalar el paquete *AWS Core Management Tools* pedirá las claves para poder utilizar el ToolKit. Para los efectos de poder compilar utilizar:
+>**Access Key ID:** AKIA37OGRPU2QREVN7IS
+
+>**Secret Access Key:** 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
 ## Invocación de los servicios
 Para la invocación a los servicios es necesaria una aplicación que consuma servicios rest. Para las pruebas se ha utilizado ***Postman***
 ### mutant
