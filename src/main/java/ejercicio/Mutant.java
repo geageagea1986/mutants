@@ -8,7 +8,9 @@ public class Mutant {
 	
 	final int LENGTH_CHAR_MATCH 	= 4;	/**< Tamaño de la secuencia para saber si es mutante */
 	final int MAX_MATCHES 			= 2;	/**< Cantidad de coincidencias para la detección de un mutante */
-
+	
+	static public String BadDnaChainException = "Bad dna chain";		/**< String de respuesta en caso de error de parseo de la cadena dna */
+	
 	/**
 	 * Método para la búsqueda de coincidencias anteriores en horizontal
 	 * @param indexChar				Índice de la columna a verificar
@@ -228,7 +230,7 @@ public class Mutant {
 		
 		// Verifico que no sea null y que el tamaño verifique la condición del ejercicio
 		if(dna == null || dna.length < LENGTH_CHAR_MATCH)
-			throw new Throwable("Bad dna chain");
+			throw new Throwable(BadDnaChainException);
 		
 		final int mMatrix = dna.length;
 		
@@ -237,12 +239,12 @@ public class Mutant {
 		{			
 			// Verifico que la dimensión sea la correcta
 			if(cadena.length() != mMatrix)
-				throw new Throwable("Bad dna chain");
+				throw new Throwable(BadDnaChainException);
 			
 			// Verifico que la cadena contenga sólo ATCG
 			if(!Pattern.matches("^[ATCG]*$", cadena))
 			{
-				throw new Throwable("Bad dna chain");
+				throw new Throwable(BadDnaChainException);
 			}
 		}
 		

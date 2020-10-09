@@ -35,10 +35,28 @@ public class StatsHandler implements RequestHandler<Map<String, String>, String>
 		return result;
 	}
 
+	/**
+	 * Arma un string con el JSON de respuesta esperado por el servicio
+	 * @param mutantsCount		Cantidad de mutantes detectados
+	 * @param notMutantsCount	Cantidad de no mutantes detectados
+	 * @param ratio				Relación mutantes / humanos detectados
+	 * @return					String JSON con los valores pasados
+	 */
+	public String BuildJsonResponse(Integer mutantsCount, Integer notMutantsCount, Double ratio) {
+
+		JsonObject statsResponseJson = new JsonObject();
+		statsResponseJson.addProperty(mutantsCountJson, mutantsCount);
+		statsResponseJson.addProperty(humansCountJson, mutantsCount + notMutantsCount);
+		statsResponseJson.addProperty(ratioJson, (double)Math.round(ratio * 100) / 100);
+		
+		return statsResponseJson.toString();
+	}
+	
 	@Override
 	public String handleRequest(Map<String, String> event, Context context) {
 
 		LambdaLogger logger = context.getLogger();
+		logger.log("CONTEXT: " + context.getFunctionName() + "\n");
 		
 		// Contadores de los registros
 		Integer mutantsCount = 0;
@@ -61,13 +79,7 @@ public class StatsHandler implements RequestHandler<Map<String, String>, String>
 		if(mutantsCount > 0)
 			ratio =  (double) mutantsCount / (notMutantsCount + mutantsCount);
 		
-		// Devuelvo los resultados en el formato requerido
-		JsonObject statsResponseJson = new JsonObject();
-		statsResponseJson.addProperty(mutantsCountJson, mutantsCount);
-		statsResponseJson.addProperty(humansCountJson, mutantsCount + notMutantsCount);
-		
-		statsResponseJson.addProperty(ratioJson, (double)Math.round(ratio * 100) / 100);
-		
-		return statsResponseJson.toString();
+		// Devuelvo los resultados en el formato requerido		
+		return BuildJsonResponse(mutantsCount, notMutantsCount, ratio);
 	}
 }

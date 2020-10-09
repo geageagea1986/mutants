@@ -1,91 +1,85 @@
 package ejercicio;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class MutantTest {
 
-	@Test
-	void test() {
+	Mutant mutant = new Mutant();
 
-		Mutant mutant = new Mutant();
-		String[] dnaDoubleVertical = {
-				"ATGCAACA",
-				"CAGAGCCA",
-				"TCTTGAGA",
-				"CAAACGCA",
-				"AACCTACA",
-				"TCACGGTA",
-				"AACATACA",
-				"TCCCTGCA"
-				};
-		String[] dnaHorizontalVertical = {
-				"AAGAGAAA",
-				"CAGAAGCT",
-				"CACAGCCA",
-				"TTTTTTTT",
-				"AACCTACG",
-				"TCACGGTA",
-				"AACATACA",
-				"TCCCTGCA"
-				};
-		String[] dnaDoubleUpDiagonal = {
-				"ATGCAACT",
-				"CACAGCTA",
-				"TGTTGTGA",
-				"CAAATGCT",
-				"AACTTACA",
-				"TCTCGGTA",
-				"TTCATACC",
-				"TCCCTGCA"
-				};
-		String[] dnaDoubleDownDiagonal = {
-				"TCCCTGCA",
-				"ATCATACC",
-				"TCTCGGTA",
-				"AACTTACA",
-				"CAAATGCT",
-				"TCTTGTGA",
-				"CACAGCTA",
-				"ATGAAACT"
-				};
+	@Test
+	void testEmpty() throws Throwable {
+		Throwable t = Assertions.assertThrows(Throwable.class, () -> {
+			mutant.isMutant(new String[] { "", "", "", "" });
+		});
+		assertEquals(Mutant.BadDnaChainException, t.getMessage());
+	}
+	
+	@Test
+	void testHuman() throws Throwable {
+		String[] dnaHumano = { "ACGT", "CGTA", "AGTC", "TCAG" };
+		Assertions.assertEquals(false, mutant.isMutant(dnaHumano));		
+	}
+
+	@Test
+	void testBadDna() throws Throwable {
+		Throwable t = Assertions.assertThrows(Throwable.class, () -> {
+			mutant.isMutant(new String[] { "AcAA", "AcAA", "AcAA", "AcAA" });
+		});
+		assertEquals(Mutant.BadDnaChainException, t.getMessage());
+	}
+
+	@Test
+	void testOneShorter() throws Throwable {
+		Throwable t = Assertions.assertThrows(Throwable.class, () -> {
+			mutant.isMutant(new String[] { "AAAA", "AAAA", "AAAA", "AAA" });
+		});	
+		assertEquals(Mutant.BadDnaChainException, t.getMessage());
+	}
+
+	@Test
+	void testDoubleVertical() throws Throwable {
+
+		String[] dnaDoubleVertical = { "ATGCAACA", "CAGAGCCA", "TCTTGAGA", "CAAACGCA", "AACCTACA", "TCACGGTA",
+				"AACATACA", "TCCCTGCA" };
+
+		Assertions.assertEquals(true, mutant.isMutant(dnaDoubleVertical));
+	}
+
+	@Test
+	void testDoubleHorizontal() throws Throwable {
+
+		String[] dnaHorizontal = { "AAGAGAAA", "CAGAAGCT", "CACAGCCA", "TTTTTTTT", "AACCTACG", "TCACGGTA", "AACATACA",
+				"TCCCTGCA" };
+
+		Assertions.assertEquals(true, mutant.isMutant(dnaHorizontal));
+	}
+
+	@Test
+	void testDoubleDiagonalUp() throws Throwable {
+
+		String[] dnaDoubleUpDiagonal = { "ATGCAACT", "CACAGCTA", "TGTTGTGA", "CAAATGCT", "AACTTACA", "TCTCGGTA",
+				"TTCATACC", "TCCCTGCA" };
+
+		Assertions.assertEquals(true, mutant.isMutant(dnaDoubleUpDiagonal));
+	}
+
+	@Test
+	void testDoubleDiagonalDown() throws Throwable {
 		
-		try {
-			assertEquals(true, mutant.isMutant(dnaHorizontalVertical));
-			assertEquals(true, mutant.isMutant(dnaDoubleVertical));
-			assertEquals(true, mutant.isMutant(dnaDoubleUpDiagonal));
-			assertEquals(true, mutant.isMutant(dnaDoubleDownDiagonal));
-			assertEquals(false, mutant.isMutant(null));
-		} catch (Throwable e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-		
-		try {
-			assertEquals(false, mutant.isMutant(new String[] {"", "", ""}));
-		} catch (Throwable e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-		
-		try {
-			assertEquals(true, mutant.isMutant(new String[] {"AAAA", "AAAA", "AAAA", "AAAA"}));
-			assertEquals(false, mutant.isMutant(new String[] {"AcAA", "AcAA", "AcAA", "AcAA"}));
-		} catch (Throwable e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-		
-		try {
-			
-			String[] dnaHumano = {
-					"ACGT",
-					"CGTA",
-					"AGTC",
-					"TCAG"
-			};
-			assertEquals(false, mutant.isMutant(dnaHumano));
-			assertEquals(false, mutant.isMutant(new String[] {"AAAA", "AAAA", "AAAA", "AAA"}));
-		} catch (Throwable e) {
-			System.out.println(e.getLocalizedMessage());
-		}
+		String[] dnaDoubleDownDiagonal = { "TCCCTGCA", "ATCATACC", "TCTCGGTA", "AACTTACA", "CAAATGCT", "TCTTGTGA",
+				"CACAGCTA", "ATGAAACT" };
+
+		Assertions.assertEquals(true, mutant.isMutant(dnaDoubleDownDiagonal));
+	}
+
+	@Test
+	void testNull() throws Throwable {
+		Throwable t = Assertions.assertThrows(Throwable.class, () -> {
+			mutant.isMutant(null);
+		});
+		assertEquals(Mutant.BadDnaChainException, t.getMessage());
 	}
 }
